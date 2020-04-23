@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <!--[if lt IE 8 ]><html class="no-js ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="no-js ie ie8" lang="en"> <![endif]-->
@@ -31,10 +29,11 @@
 	================================================== -->
 	<link rel="shortcut icon" href="favicon.ico" >
 
+	<?php wp_head(); ?>
+
 </head>
 
 <body>
-<?php echo get_template_directory_uri(); ?>
    <!-- Header
    ================================================== -->
       <header>
