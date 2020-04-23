@@ -2,8 +2,13 @@
 
 add_action('wp_enqueue_scripts', 'style_them');
 add_action('wp_footer', 'scripts_them');
-add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
+//add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
+//Реєструємо меню
+add_action('after_setup_theme', 'myMenu');
 
+function myMenu (){
+    register_nav_menu('topMenu', 'Верхнє меню');
+}
 function style_them(){
     wp_enqueue_style('style', get_stylesheet_uri());
     wp_enqueue_style('default', get_template_directory_uri() . '/assets/css/default.css');
