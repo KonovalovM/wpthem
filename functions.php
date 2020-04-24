@@ -5,6 +5,25 @@ add_action('wp_footer', 'scripts_them');
 //add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
 //Реєструємо меню
 add_action('after_setup_theme', 'myMenu');
+//реєстрація віджетів
+add_action('widgets_init', 'reg_my_widget');
+
+function reg_my_widget (){
+    register_sidebar(array (
+    'name' => 'LeftSidebar',
+    'id' => 'left_sidebar',
+    'description' => 'Опис сайдбара',
+//        які теги ставити до віджета
+    'before_widget' => '<div class="widget %2$s">',
+//        які теги ставити після віджета
+    'after_widget' => '</div>',
+//        які теги ставити до заголовка
+    'before_title' => '<h5 class="widgettitle">',
+//        які теги ставити після заголовка
+    'after_title' => '</h5>'
+    ));
+
+}
 
 function myMenu (){
     register_nav_menu('topMenu', 'Верхнє меню');
