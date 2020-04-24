@@ -8,6 +8,7 @@ add_action('after_setup_theme', 'myMenu');
 
 function myMenu (){
     register_nav_menu('topMenu', 'Верхнє меню');
+    register_nav_menu('downMenu', 'Нижнє меню');
 }
 function style_them(){
     wp_enqueue_style('style', get_stylesheet_uri());

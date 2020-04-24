@@ -269,10 +269,11 @@ ul#nav li a {
 
 ul#nav li a:active { background-color: transparent !important; }
 ul#nav li:hover > a,
-ul#nav li.current a { color: #fff; }
-
+/*вибирає по id(#nav) елемент current-menu-item - робить меню активним */
+ul#nav li.current-menu-item a { color: #fff; }
+ul#footer-nav li.current-menu-item a { color: #000; }
 /* adds down arrow */
-ul#nav span:after {
+.menu-item-has-children:after {
    width: 0;
 	height: 0px;
 	border: 4px solid transparent;
