@@ -32,4 +32,12 @@ function my_sep($sep){
     $sep= ' | ';
     return $sep;
 }
+
+//добавляє в кінці контету текст
+add_filter('the_content', 'change_content');
+function change_content($content){
+    $content.= 'Дякуємо за перегляд!';
+    return $content;
+}
+
 ?>

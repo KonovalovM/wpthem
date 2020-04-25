@@ -54,4 +54,5 @@ function scripts_them (){
 
 //підключається файл filters.php
 include (TEMPLATEPATH . '/filters.php');
+include (TEMPLATEPATH . '/shortcode.php');
 ?>
