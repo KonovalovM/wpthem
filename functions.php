@@ -14,31 +14,7 @@ add_theme_support('title-tag');
 add_theme_support('post-thumbnails', array('post'));
 //    реєструється розмір мініатюри
 add_image_size('post_thumb', 1300, 500, true);
-//добавляється фільтр для виводу частини контенту
-add_filter('excerpt_more', 'new_excrpt_more');
 
-function new_excrpt_more ($more){
-    global $post;
-//    добавляється посилання на пост (читати далі)
-    return '<a href="'. get_permalink($post->ID) .'"> Читати далі...</a>';
-    }
-
-// удаляет H2 из шаблона пагинации
-add_filter('navigation_markup_template', 'my_navigation_template', 10, 2 );
-function my_navigation_template( $template, $class ){
-	/*
-	Вид базового шаблона:
-	<nav class="navigation %1$s" role="navigation">
-		<h2 class="screen-reader-text">%2$s</h2>
-		<div class="nav-links">%3$s</div>
-	</nav>
-	*/
-	return '
-	<nav class="navigation %1$s" role="navigation">
-		<div class="nav-links">%3$s</div>
-	</nav>
-	';
-}
 
 function reg_my_widget (){
     register_sidebar(array (
@@ -75,4 +51,7 @@ function scripts_them (){
     wp_enqueue_style('doubletaptogo', get_template_directory_uri() . '/assets/js/doubletaptogo.js');
     wp_enqueue_style('init', get_template_directory_uri() . '/assets/js/init.js');
 }
+
+//підключається файл filters.php
+include (TEMPLATEPATH . '/filters.php');
 ?>
