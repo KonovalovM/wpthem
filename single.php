@@ -1,8 +1,9 @@
-<?php get_header()?>
+<?php get_header();
 
-   <!-- Page Title
-   ================================================== -->
-    <?php the_post(); ?>
+
+//   <!-- Page Title
+//   ================================================== -->
+    if (have_posts()): while (have_posts()): the_post(); ?>
     <!-- Page Title End-->
 
       <!-- Content
@@ -63,4 +64,9 @@
 
    </section> <!-- Tweets Section End-->
 
-  <?php get_footer()?>
+  <?php
+    endwhile;
+    endif;
+
+    get_footer()
+    ?>
