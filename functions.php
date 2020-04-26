@@ -12,6 +12,8 @@ add_action('widgets_init', 'reg_my_widget');
 add_theme_support('title-tag');
 //    добавляє можливість загрузки картинок в пости
 add_theme_support('post-thumbnails', array('post'));
+//добавляєвибір формату постів в записах
+add_theme_support('post-formats', array('video', 'aside', 'gallery'));
 //    реєструється розмір мініатюри
 add_image_size('post_thumb', 1300, 500, true);
 
