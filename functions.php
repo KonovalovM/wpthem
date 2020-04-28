@@ -9,6 +9,9 @@ add_action('after_setup_theme', 'myMenu');
 add_action('widgets_init', 'reg_my_widget');
 //реєстрація новогопосттипу
 add_action( 'init', 'register_post_types' );
+// хук для регистрации таксономії
+add_action( 'init', 'create_taxonomy' );
+
 
 //    виводить заголовок на вкладку браузера
 add_theme_support('title-tag');
@@ -78,13 +81,14 @@ function register_post_types(){
             'description'         => 'Це наші роботи в портфоліо',
             'public'              => true,
             'publicly_queryable'  => true, // зависит от public
-            'exclude_from_search' => true, // зависит от public
+//        виключаємо для пошуку таксономії
+            'exclude_from_search' => false, // зависит от public
             'show_ui'             => true, // зависит от public
             'show_in_nav_menus'   => true, // зависит от public
             'show_in_menu'        => true, // показывать ли в меню адмнки
             'show_in_admin_bar'   => true, // зависит от show_in_menu
 //        включення редактора Gutenberg
-            'show_in_rest'        => true, // добавить в REST API. C WP 4.7
+//            'show_in_rest'        => true, // добавить в REST API. C WP 4.7
             'rest_base'           => null, // $post_type. C WP 4.7
             'menu_position'       => 4,
             'menu_icon'           => 'dashicons-portfolio',
@@ -92,11 +96,48 @@ function register_post_types(){
 		//'capabilities'      => 'post', // массив дополнительных прав для этого типа записи
 		//'map_meta_cap'      => null, // Ставим true чтобы включить дефолтный обработчик специальных прав
 		'hierarchical'        => false,
-		'supports'            => [ 'title', 'editor','thumbnail','excerpt','post-formats'], // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
-		'taxonomies'          => [],
+		'supports'            => [ 'title', 'editor','thumbnail','excerpt','post-formats', 'taxonomies'], // 'title','editor','author','thumbnail','excerpt','trackbacks','custom-fields','comments','revisions','page-attributes','post-formats'
+//        до цього посту выдноситься таксономыя skills
+		'taxonomies'          => ['skills'],
 		'has_archive'         => false,
 		'rewrite'             => true,
 		'query_var'           => true,
+	] );
+}
+
+function create_taxonomy(){
+
+	register_taxonomy( 'skills', [ 'portfolio' ], [
+		'label'                 => '', // определяется параметром $labels->name
+		'labels'                => [
+			'name'              => 'Навики',
+			'singular_name'     => 'Навик',
+			'search_items'      => 'Знайти навик',
+			'all_items'         => 'Всі навики',
+			'view_item '        => 'Переглянути навики',
+			'parent_item'       => 'Батьківський навик',
+			'parent_item_colon' => 'Батьківський Навик:',
+			'edit_item'         => 'Редагувати навик',
+			'update_item'       => 'Оновити навик',
+			'add_new_item'      => 'Добавити новий навик',
+			'new_item_name'     => 'Нове імя навика',
+			'menu_name'         => 'Навики',
+		],
+		'description'           => 'Навики які використовувалися в роботі над проектом', // описание таксономии
+		'public'                => true,
+        'publicly_queryable'    => true, // равен аргументу public
+//        якщо в таксономіє є гілки ставимо true
+		'hierarchical'          => false,
+
+		'rewrite'               => true,
+		//'query_var'             => $taxonomy, // название параметра запроса
+		'capabilities'          => array(),
+		'meta_box_cb'           => null, // html метабокса. callback: `post_categories_meta_box` или `post_tags_meta_box`. false — метабокс отключен.
+		'show_admin_column'     => false, // авто-создание колонки таксы в таблице ассоциированного типа записи. (с версии 3.5)
+		'show_in_rest'          => null, // добавить в REST API
+		'rest_base'             => null, // $taxonomy
+		// '_builtin'              => false,
+		//'update_count_callback' => '_update_post_term_count',
 	] );
 }
 
