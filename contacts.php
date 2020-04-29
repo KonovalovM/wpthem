@@ -47,7 +47,8 @@ Template Post Type: post, page
               <div id="contact-form">
 
                   <!-- form -->
-                  <form name="contactForm" id="contactForm" method="post" action="">
+<!--send_mail - назва функції яка знаходиться в файлі function.php яка спрацьовує при відправкі ajax запиту по admin_url в файл admin-ajax.php-->
+                  <form name="contactForm" id="contactForm" method="post" action="<?php echo admin_url('admin-ajax.php?action=send_mail')?>">
       					<fieldset>
 
                         <div class="half">
@@ -192,4 +193,4 @@ Template Post Type: post, page
 
    </section> <!-- Tweet Section End-->
 
-<?php get_footer();?>
+ <?php get_footer(); ?>

@@ -11,7 +11,9 @@ add_action('widgets_init', 'reg_my_widget');
 add_action( 'init', 'register_post_types' );
 // хук для регистрации таксономії
 add_action( 'init', 'create_taxonomy' );
-
+//хуки для ajax
+add_action('wp_ajax_send_mail', 'send_mail');
+add_action('wp_ajax_nopriv_send_mail', 'send_mail');
 
 //    виводить заголовок на вкладку браузера
 add_theme_support('title-tag');
@@ -33,9 +35,14 @@ function style_them(){
 }
 
 function scripts_them (){
-    wp_enqueue_style('jquery', get_template_directory_uri() . '/assets/js/jquery.flexslider.js');
-    wp_enqueue_style('doubletaptogo', get_template_directory_uri() . '/assets/js/doubletaptogo.js');
-    wp_enqueue_style('init', get_template_directory_uri() . '/assets/js/init.js');
+    wp_deregister_script('jquery');
+    wp_register_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('flexslider', get_template_directory_uri() . '/assets/js/jquery.flexslider.js', ['jquery'], null, true);
+    wp_enqueue_script('doubletaptogo', get_template_directory_uri() . '/assets/js/doubletaptogo.js', ['jquery'], null, true);
+    wp_enqueue_script('init', get_template_directory_uri() . '/assets/js/init.js', ['jquery'], null, true);
+    wp_enqueue_script('modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', 'null', null, true);
+    wp_enqueue_script('main', get_template_directory_uri() . '/assets/js/main.js', ['jquery'], null, true);
 }
 
 function myMenu (){
@@ -140,7 +147,28 @@ function create_taxonomy(){
 		//'update_count_callback' => '_update_post_term_count',
 	] );
 }
+//функція для відправки повідомлень в формі контакти
+function send_mail (){
+    $contactName = $POST['contactName'];
+    $contactEmail = $POST['contactEmail'];
+    $contactSubject = $POST['contactSubject'];
+    $ontactMessage = $POST['ontactMessage'];
 
+//    береться електрока з адмінки
+    $to = get_option('admin_email');
+//    видалити фыльтри, якы можуть змынити заголовок $headers
+    remove_all_filters('wp_mail_from');
+    remove_all_filters('wp_mail_from_name');
+
+    $headers = array (
+        'From: Me Myself <me@ghf.com>',
+        'content-type: text/html',
+        'Cc: John Q Codex <fg@jh.iou>',
+        'Cc: gfgh@hjgj.ljh',
+    );
+        wp_mail($to, $contactSubject, $ontactMessage, $headers);
+    wp_die ();
+}
 //підключається файл filters.php
 include (TEMPLATEPATH . '/filters.php');
 include (TEMPLATEPATH . '/shortcode.php');
