@@ -46,7 +46,9 @@ Template Post Type: portfolio
                   <ul class="portfolio-meta-list">
 						   <li><span>Date: </span><?php the_time('F, jS, Y'); ?></li>
 						   <li><span>Client </span>Styleshout</li>
-						   <li><span>Skills: </span>Photoshop, Photography, Branding</li>
+<!--						   виводиться таксономія-->
+						   <li><span>Skills: </span><?php the_terms(get_the_ID(),'skills', ' ', ' / ',' '); ?> </li>
+
 				      </ul>
 
                   <a class="button" href="http://behance.net">Переглянути проект</a>
